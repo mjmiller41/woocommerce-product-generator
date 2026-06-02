@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/woocommerce-product-generator/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
