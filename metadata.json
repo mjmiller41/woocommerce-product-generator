@@ -1,0 +1,6 @@
+{
+  "name": "Product Lifestyle Image Generator",
+  "description": "Upload a product image and generate beautiful, realistic lifestyle images of the product in premium settings using Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
