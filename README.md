@@ -1,12 +1,6 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# WooCommerce Product Generator
 
-# Ambient Studio AI - WooCommerce Product Generator
-
-Ambient Studio AI is a sophisticated React-based e-commerce helper application. It utilizes the official Google GenAI SDK to automatically analyze uploaded product images, extract WooCommerce-compatible metadata, and generate high-fidelity product lifestyle mockups.
-
-View your app in AI Studio: https://ai.studio/apps/555018b4-4cbf-498c-aecd-eb4094a7c636
+This application utilizes the official Google GenAI SDK to automatically analyze uploaded product images, extract WooCommerce-compatible metadata, and generate high-fidelity product lifestyle mockups.
 
 ---
 
@@ -39,6 +33,7 @@ View your app in AI Studio: https://ai.studio/apps/555018b4-4cbf-498c-aecd-eb409
 Below is the file structure of the project with links to the corresponding files:
 
 ### Configuration Files
+
 - [package.json](file:///home/michael/Code/Projects/woocommerce-product-generator/package.json) — Defines app dependencies (such as React 19, TailwindCSS v4, Vite 6, and Google GenAI SDK).
 - [tsconfig.json](file:///home/michael/Code/Projects/woocommerce-product-generator/tsconfig.json) — Configures compilation rules for TypeScript.
 - [vite.config.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/vite.config.ts) — Sets up React and TailwindCSS compiler plugin integrations.
@@ -46,17 +41,20 @@ Below is the file structure of the project with links to the corresponding files
 - [logo.jpg](file:///home/michael/Code/Projects/woocommerce-product-generator/logo.jpg) — The official WooCommerce-themed logo for the application.
 
 ### Core Architecture
+
 - [src/main.tsx](file:///home/michael/Code/Projects/woocommerce-product-generator/src/main.tsx) — Bootstraps the React application.
 - [src/App.tsx](file:///home/michael/Code/Projects/woocommerce-product-generator/src/App.tsx) — Houses the main controller state, layout grid, settings modal, and event pipelines.
 - [src/types.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/types.ts) — Holds TypeScript interfaces defining `ProductAnalysis` schema, `LifestyleConfig`, and `HistoryItem` records.
 - [src/index.css](file:///home/michael/Code/Projects/woocommerce-product-generator/src/index.css) — Custom styles and custom brand color configurations.
 
 ### Core Libraries
+
 - [src/lib/gemini.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/lib/gemini.ts) — Drives Google GenAI API communication, configuring schema-enforced structured product scanning via `gemini-3.5-flash`, smart placement editing via `gemini-2.5-flash-image`, and image generation via `imagen-4.0-generate-001`.
 - [src/lib/db.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/lib/db.ts) — Manages CRUD operations inside browser IndexedDB for session history caching.
 - [src/lib/export.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/lib/export.ts) — Orchestrates building and downloading WooCommerce CSV packages.
 
 ### Components
+
 - [src/components/ProductUploader.tsx](file:///home/michael/Code/Projects/woocommerce-product-generator/src/components/ProductUploader.tsx) — Drag-and-drop file uploader supporting batch image intake.
 - [src/components/AnalysisPanel.tsx](file:///home/michael/Code/Projects/woocommerce-product-generator/src/components/AnalysisPanel.tsx) — Display and editor for extracted product attributes (brand, weight, tags, colors, and prompt reconstruction).
 - [src/components/ConfigPanel.tsx](file:///home/michael/Code/Projects/woocommerce-product-generator/src/components/ConfigPanel.tsx) — Interface to configure rendering methods, custom composition instructions, aspect ratios, and lighting profiles.
@@ -72,22 +70,26 @@ Below is the file structure of the project with links to the corresponding files
 - **Node.js** (v18 or higher recommended)
 - **NPM** (v9 or higher)
 - A **Gemini API Key** (configured through the in-app settings or `.env.local`).
-  - *Note: To generate lifestyle images using Imagen 4 model, your Google Cloud billing or paid tier must be enabled.*
+  - _Note: To generate lifestyle images using Imagen 4 model, your Google Cloud billing or paid tier must be enabled._
 
 ### Quick Installation
 
 1. Clone the repository and install dependencies:
+
    ```bash
    npm install
    ```
 
 2. (Optional) Create a `.env.local` file by copying the example template:
+
    ```bash
    cp .env.example .env.local
    ```
+
    Provide your `GEMINI_API_KEY` inside `.env.local` if you wish to default-initialize it in the local workspace.
 
 3. Run the application in local development mode:
+
    ```bash
    npm run dev
    ```
@@ -102,8 +104,10 @@ Below is the file structure of the project with links to the corresponding files
 ## ⚡ Technical Workflow & APIs
 
 ### 1. Structured Visual Scanning (`gemini-3.5-flash`)
-When a user uploads a product image, the app triggers `analyzeProduct` in [src/lib/gemini.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/lib/gemini.ts#L36-L117). This transmits the image's raw base64 data to `gemini-3.5-flash` with a strict JSON Schema configuration. 
+
+When a user uploads a product image, the app triggers `analyzeProduct` in [src/lib/gemini.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/lib/gemini.ts#L36-L117). This transmits the image's raw base64 data to `gemini-3.5-flash` with a strict JSON Schema configuration.
 Gemini extracts attributes like:
+
 ```json
 {
   "name": "Product name",
@@ -116,12 +120,15 @@ Gemini extracts attributes like:
 ```
 
 ### 2. Smart Placement (Image-to-Image via `gemini-2.5-flash-image`)
-If *Smart Placement* is chosen, the application triggers a content generation request using `gemini-2.5-flash-image`. It sends both the original product's base64 image and a prompt describing the desired ambient setting and lighting. This integrates the product cleanly into the background, matching perspective, lighting, and shadow occlusion.
+
+If _Smart Placement_ is chosen, the application triggers a content generation request using `gemini-2.5-flash-image`. It sends both the original product's base64 image and a prompt describing the desired ambient setting and lighting. This integrates the product cleanly into the background, matching perspective, lighting, and shadow occlusion.
 
 ### 3. Studio Re-creation (Text-to-Image via `imagen-4.0-generate-001`)
-If *Studio Re-creation* is chosen, the application uses the descriptive attributes returned by `gemini-3.5-flash` to construct a detailed photography prompt, sending it to `imagen-4.0-generate-001` via the `generateImages` API. This yields a completely fresh, high-resolution lifestyle marketing mock of the product.
+
+If _Studio Re-creation_ is chosen, the application uses the descriptive attributes returned by `gemini-3.5-flash` to construct a detailed photography prompt, sending it to `imagen-4.0-generate-001` via the `generateImages` API. This yields a completely fresh, high-resolution lifestyle marketing mock of the product.
 
 ### 4. Cataloging & Export
+
 - The final product analysis state and generated image URIs are mapped to a `HistoryItem` object.
 - The record is appended to browser memory and committed to IndexedDB via [src/lib/db.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/lib/db.ts#L36-L49).
 - Exporting to WooCommerce CSV format maps the `ProductAnalysis` schema properties directly to default headers mapped in [src/lib/export.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/src/lib/export.ts#L3-L75).

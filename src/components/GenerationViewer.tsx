@@ -107,7 +107,7 @@ export default function GenerationViewer({
   const downloadImages = async () => {
     const imagesToDownload = generatedImages && generatedImages.length > 0
       ? (selectedIndices.size > 0 
-          ? Array.from(selectedIndices).map(idx => generatedImages[idx])
+          ? [...selectedIndices].map(idx => generatedImages[idx])
           : generatedImages)
       : (generatedImage ? [generatedImage] : []);
 
