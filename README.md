@@ -43,6 +43,7 @@ Below is the file structure of the project with links to the corresponding files
 - [tsconfig.json](file:///home/michael/Code/Projects/woocommerce-product-generator/tsconfig.json) — Configures compilation rules for TypeScript.
 - [vite.config.ts](file:///home/michael/Code/Projects/woocommerce-product-generator/vite.config.ts) — Sets up React and TailwindCSS compiler plugin integrations.
 - [.env.example](file:///home/michael/Code/Projects/woocommerce-product-generator/.env.example) — Provides a template for local environment variables.
+- [logo.jpg](file:///home/michael/Code/Projects/woocommerce-product-generator/logo.jpg) — The official WooCommerce-themed logo for the application.
 
 ### Core Architecture
 - [src/main.tsx](file:///home/michael/Code/Projects/woocommerce-product-generator/src/main.tsx) — Bootstraps the React application.

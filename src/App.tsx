@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import logoUrl from "../logo.jpg";
 import ProductUploader from "./components/ProductUploader";
 import AnalysisPanel from "./components/AnalysisPanel";
 import ConfigPanel, { SCENE_PRESETS } from "./components/ConfigPanel";
@@ -314,9 +315,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center shrink-0">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-            </div>
+            <img src={logoUrl} alt="Ambient Studio AI Logo" className="w-8 h-8 rounded-lg shrink-0 object-cover" />
             <div>
               <h1 className="font-display font-semibold text-brand-900 text-lg tracking-tight leading-none">
                 Ambient Studio AI
